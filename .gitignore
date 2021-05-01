@@ -4,4 +4,11 @@ node_modules
 /build
 /functions
 
+
+# sqlite
+*.db
+*.db-shm
+*.db-wal
+
+#vercel
 .vercel

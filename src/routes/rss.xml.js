@@ -1,10 +1,10 @@
 const render = (
 	items
-) => `<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+) => `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 	<title>Crinkle.dev RSS Feed</title>
     <description>This is a test</description>
-    <link>https://hooked-on-rss.vercel.app/rss.xml</link>
+    <atom:link href="https://hooked-on-rss.vercel.app/rss.xml" rel="self" type="application/rss+xml" />
 	${items
 		.map(
 			(item) => `
