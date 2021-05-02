@@ -25,7 +25,11 @@ export function get({ params }) {
 	console.log(msgs);
 	if (parsedPath.ext === '.json') {
 		return {
-			body: msgs.map((msg) => ({ ...msg, raw_body: JSON.parse(msg.raw_body) }))
+			body: msgs.map((msg) => ({
+				...msg,
+				raw_body: JSON.parse(msg.raw_body),
+				raw_headers: JSON.parse(msg.raw_headers)
+			}))
 		};
 	}
 

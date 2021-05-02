@@ -1,6 +1,4 @@
 <script context="module">
-	import { compute_rest_props } from 'svelte/internal';
-
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
@@ -13,6 +11,7 @@
 		if (res.ok) {
 			return {
 				props: {
+					path: page.params.path,
 					msgs
 				}
 			};
@@ -27,10 +26,17 @@
 
 <script>
 	export let msgs;
-
-	const abc = { x: 3 };
-	JSON.stringify();
+	export let path;
 </script>
+
+<svelte:head>
+	<link
+		rel="alternate"
+		type="application/rss+xml"
+		title="RSS Feed of this page"
+		href="{path}.rss"
+	/>
+</svelte:head>
 
 <div>
 	{#each msgs as { raw_body, path }}
