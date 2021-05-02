@@ -3,13 +3,14 @@ import DB from 'better-sqlite3-helper';
 /**
  * @type {import('@sveltejs/kit').RequestHandler}
  */
-export async function post({ params, body, context }) {
+export async function post({ params, body, headers }) {
 	const { dbPath } = standardize(params.path);
 
 	DB().insert('msg', {
 		path: dbPath,
 		received_at: new Date().getTime(),
-		raw_body: JSON.stringify(body || {})
+		raw_body: JSON.stringify(body || {}),
+		raw_headers: JSON.stringify(headers || {})
 	});
 
 	return {
