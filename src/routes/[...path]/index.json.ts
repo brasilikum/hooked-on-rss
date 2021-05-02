@@ -1,16 +1,15 @@
+import { standardize } from '$lib/path';
 import DB from 'better-sqlite3-helper';
-import { parse, normalize, resolve } from 'path';
 /**
  * @type {import('@sveltejs/kit').RequestHandler}
  */
 export async function post({ params, body, context }) {
-	const parsedPath = parse(normalize(params.path));
-	const dbPath = [parsedPath.dir ? `/${parsedPath.dir}` : null, parsedPath.name, ''].join('/');
+	const { dbPath } = standardize(params.path);
 
 	DB().insert('msg', {
 		path: dbPath,
 		received_at: new Date().getTime(),
-		raw_json: JSON.stringify(body)
+		raw_body: JSON.stringify(body || {})
 	});
 
 	return {
@@ -19,26 +18,24 @@ export async function post({ params, body, context }) {
 }
 
 export function get({ params }) {
-	const parsedPath = parse(normalize(params.path));
-	const dbPath = [parsedPath.dir ? `/${parsedPath.dir}` : null, parsedPath.name, ''].join('/');
+	const { dbPath, parsedPath } = standardize(params.path);
 
-	console.log(parsedPath, dbPath);
 	let msgs = DB().query('SELECT * FROM msg WHERE path LIKE ?', `${dbPath}%`);
-
+	console.log(msgs);
 	if (parsedPath.ext === '.json') {
 		return {
-			body: msgs
+			body: msgs.map((msg) => ({ ...msg, raw_body: JSON.parse(msg.raw_body) }))
 		};
 	}
 
 	if (!['.rss', '.atom'].includes(parsedPath.ext)) {
-		return { status: 404, body: { error: 'File extension not supported' } };
+		return;
 	}
 
 	const feed = render(
 		msgs.map((msg) => ({
 			title: msg.path,
-			description: msg.raw_json,
+			description: msg.raw_body,
 			date: new Date(msg.received_at),
 			slug: ''
 		}))
