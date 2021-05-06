@@ -6,6 +6,13 @@ import DB from 'better-sqlite3-helper';
 export async function post({ params, body, headers }) {
 	const { dbPath } = standardize(params.path);
 
+	if (dbPath === '/') {
+		return {
+			status: 403,
+			body: { error: 'Nobody can write to /. Please write to a subpath like /proyectX' }
+		};
+	}
+
 	DB().insert('msg', {
 		path: dbPath,
 		received_at: new Date().getTime(),
@@ -22,7 +29,7 @@ export function get({ params }) {
 	const { dbPath, parsedPath } = standardize(params.path);
 
 	let msgs = DB().query('SELECT * FROM msg WHERE path LIKE ?', `${dbPath}%`);
-	console.log(msgs);
+
 	if (parsedPath.ext === '.json') {
 		return {
 			body: msgs.map((msg) => ({

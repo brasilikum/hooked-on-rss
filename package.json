@@ -33,7 +33,10 @@
 	"dependencies": {
 		"better-sqlite3": "^7.1.5",
 		"better-sqlite3-helper": "^3.1.3",
+		"cookie": "^0.4.1",
 		"cypress": "^7.2.0",
+		"string-hash": "^1.1.3",
+		"uuid": "^3.4.0",
 		"vercel": "^22.0.1"
 	}
 }
