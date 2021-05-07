@@ -1,19 +1,8 @@
 <script lang="ts">
 	import { fly, fade } from 'svelte/transition';
-	import { backIn, backOut, elasticOut, expoOut } from 'svelte/easing';
+	import { backOut } from 'svelte/easing';
 	export let anyNewMsgs = 0;
 	export let showNewMessages;
-
-	function myAnim(node, params) {
-		return {
-			css: (t) => {
-				return `
-                    transform: scale(${t}, 1)
-                `;
-			},
-			easing: expoOut
-		};
-	}
 </script>
 
 {#if anyNewMsgs}
