@@ -28,10 +28,13 @@
 	import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+	import NewMsgBubble from '$lib/newMsgBubble.svelte';
 
 	export let msgs;
 	let new_msgs = msgs;
 	export let path;
+
+	let y;
 
 	$: anyNewMsgs = new_msgs.length - msgs.length;
 
@@ -62,10 +65,13 @@
 	/>
 </svelte:head>
 
-{#if anyNewMsgs}
-	<button on:click={showNewMessages}>Load {anyNewMsgs} new messages</button>
-{/if}
+<svelte:window bind:scrollY={y} />
 
+<div class="flex justify-center pt-2">
+	<NewMsgBubble {anyNewMsgs} {showNewMessages} />
+</div>
+
+{y}
 <div>
 	{#each msgs as { raw_body, path, received_at } (received_at)}
 		<div
