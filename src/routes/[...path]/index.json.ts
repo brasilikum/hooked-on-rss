@@ -22,7 +22,7 @@ export function get({ params }) {
 	const { dbPath, parsedPath } = standardize(params.path);
 
 	let msgs = DB().query('SELECT * FROM msg WHERE path LIKE ?', `${dbPath}%`);
-	console.log(msgs);
+
 	if (parsedPath.ext === '.json') {
 		return {
 			body: msgs.map((msg) => ({
