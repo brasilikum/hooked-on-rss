@@ -1,6 +1,5 @@
 import DB from 'better-sqlite3-helper';
 import { dev } from '$app/env';
-import { base } from '$app/paths';
 
 export const db = DB({
 	path: `./data/sqlite3.db`, // this is the default

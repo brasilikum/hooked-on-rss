@@ -30,7 +30,7 @@
 	import { flip } from 'svelte/animate';
 	import NewMsgBubble from '$lib/newMsgBubble.svelte';
 
-	export let msgs;
+	export let msgs = [];
 	let new_msgs = msgs;
 	export let path;
 
@@ -39,9 +39,13 @@
 	async function updateMsgs() {
 		const { props } = await load({ fetch, page: { params: { path } } });
 		const x = await props;
+		if (msgs.length == 0) {
+			msgs = x.msgs;
+		}
 		if (x.msgs) {
 			new_msgs = x.msgs;
 		}
+
 		setTimeout(updateMsgs, 1000);
 	}
 
