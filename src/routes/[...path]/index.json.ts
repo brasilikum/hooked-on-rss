@@ -1,12 +1,12 @@
 import { standardize } from '$lib/path';
-import DB from 'better-sqlite3-helper';
+import {db} from '$lib/db';
 /**
  * @type {import('@sveltejs/kit').RequestHandler}
  */
 export async function post({ params, body, headers }) {
 	const { dbPath } = standardize(params.path);
 
-	DB().insert('msg', {
+	db.insert('msg', {
 		path: dbPath,
 		received_at: new Date().getTime(),
 		raw_body: JSON.stringify(body || {}),
@@ -21,7 +21,7 @@ export async function post({ params, body, headers }) {
 export function get({ params }) {
 	const { dbPath, parsedPath } = standardize(params.path);
 
-	let msgs = DB().query('SELECT * FROM msg WHERE path LIKE ?', `${dbPath}%`);
+	let msgs = db.query('SELECT * FROM msg WHERE path LIKE ?', `${dbPath}%`);
 
 	if (parsedPath.ext === '.json') {
 		return {

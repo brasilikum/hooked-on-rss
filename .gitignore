@@ -3,12 +3,9 @@ node_modules
 /.svelte
 /build
 /functions
-
+.svelte-kit
 
 # sqlite
 *.db
 *.db-shm
 *.db-wal
-
-#vercel
-.vercel
