@@ -1,5 +1,5 @@
 import { standardize } from '$lib/path';
-import {db} from '$lib/db';
+import { db } from '$lib/db';
 /**
  * @type {import('@sveltejs/kit').RequestHandler}
  */

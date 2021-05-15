@@ -2,7 +2,7 @@
 	/**
 	 * @type {import('@sveltejs/kit').Load}
 	 */
-	export async function load({ page, fetch, session, context }) {
+	export async function load({ page, fetch }) {
 		const url = `/${page.params.path}.json`;
 
 		const res = await fetch(url);
