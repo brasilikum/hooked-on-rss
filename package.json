@@ -16,6 +16,7 @@
 		"autoprefixer": "^10.2.5",
 		"better-sqlite3": "^7.4.0",
 		"better-sqlite3-helper": "^3.1.3",
+		"cookie": "^0.4.1",
 		"cssnano": "^5.0.2",
 		"cypress": "^7.3.0",
 		"eslint": "^7.26.0",
@@ -25,15 +26,14 @@
 		"postcss-load-config": "^3.0.1",
 		"prettier": "~2.3.0",
 		"prettier-plugin-svelte": "^2.3.0",
+		"string-hash": "^1.1.3",
 		"svelte": "^3.38.2",
 		"svelte-preprocess": "^4.7.3",
 		"tailwindcss": "^2.1.2",
 		"tslib": "^2.2.0",
 		"typescript": "^4.2.4",
-		"vite": "^2.3.2",
-		"cookie": "^0.4.1",
-		"string-hash": "^1.1.3",
-		"uuid": "^3.4.0"
+		"uuid": "^3.4.0",
+		"vite": "^2.3.2"
 	},
 	"type": "module"
 }
