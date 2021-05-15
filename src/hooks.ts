@@ -7,9 +7,19 @@ export async function handle({ request, render }) {
 	const response = await render(request);
 
 	return {
-		...response,
-		headers: {
-			...response.headers
+		...response
+	};
+}
+
+/** @type {import('@sveltejs/kit').GetSession} */
+export function getSession({ locals }) {
+	return {
+		user: {
+			// only include properties needed client-side —
+			// exclude anything else attached to the user
+			// like access tokens etc
+
+			email: locals.user?.email
 		}
 	};
 }

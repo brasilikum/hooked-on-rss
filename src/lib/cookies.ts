@@ -1,11 +1,13 @@
 import { db } from './db';
+import * as cookie from 'cookie';
 
-export const getUserInformation = (cookie: string) => {
+export const getUserInformation = (cookieString: string = '') => {
 	try {
-		const raw_cookie = cookie.replace('session_id=', '');
+		const { session_id } = cookie.parse(cookieString);
+		if (!session_id) return;
 		return db.queryFirstRow(
 			'SELECT * FROM user JOIN cookie ON user.id = cookie.user_id where cookie.cookie_id = ?',
-			raw_cookie
+			session_id
 		);
 	} catch (error) {
 		return;
