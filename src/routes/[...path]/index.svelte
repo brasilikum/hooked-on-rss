@@ -12,7 +12,7 @@
 			return {
 				props: {
 					path: page.params.path,
-					msgs
+					msgs: msgs.reverse()
 				}
 			};
 		}
@@ -25,8 +25,37 @@
 </script>
 
 <script>
-	export let msgs;
+	import { browser } from '$app/env';
+	import { fly } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
+	import NewMsgBubble from '$lib/newMsgBubble.svelte';
+
+	export let msgs = [];
+	let new_msgs = msgs;
 	export let path;
+
+	$: anyNewMsgs = new_msgs.length - msgs.length;
+
+	async function updateMsgs() {
+		const { props } = await load({ fetch, page: { params: { path } } });
+		const x = await props;
+		if (msgs.length == 0) {
+			msgs = x.msgs;
+		}
+		if (x.msgs) {
+			new_msgs = x.msgs;
+		}
+
+		setTimeout(updateMsgs, 1000);
+	}
+
+	function showNewMessages() {
+		msgs = new_msgs;
+	}
+
+	if (browser) {
+		updateMsgs();
+	}
 </script>
 
 <svelte:head>
@@ -38,14 +67,24 @@
 	/>
 </svelte:head>
 
-<div>
-	{#each msgs as { raw_body, path }}
-		<div class="bg-gray-200 m-6 p-4">
-			<div class="text-gray-500">{path}</div>
-			<h1 class="font-bold">{raw_body.title}</h1>
-			<code class="font">{JSON.stringify(raw_body)}</code>
-		</div>
-	{:else}
-		<div>No messages in this stream</div>
-	{/each}
+<div class="flex justify-center pt-2">
+	<NewMsgBubble {anyNewMsgs} {showNewMessages} />
+</div>
+
+<div class="flex justify-center">
+	<div class="min-w-4xl">
+		{#each msgs as { raw_body, path, received_at } (received_at)}
+			<div
+				class="min-w-4xl bg-gray-200 m-6 p-4"
+				in:fly={{ y: -100, duration: 400, delay: 200 }}
+				animate:flip={{ duration: 250 }}
+			>
+				<div class="text-gray-500">{path}</div>
+				<h1 class="font-bold">{raw_body.title}</h1>
+				<code class="font">{JSON.stringify(raw_body)}</code>
+			</div>
+		{:else}
+			<div>No messages in this stream</div>
+		{/each}
+	</div>
 </div>
