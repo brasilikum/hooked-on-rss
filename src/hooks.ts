@@ -18,7 +18,6 @@ export function getSession({ locals }) {
 			// only include properties needed client-side —
 			// exclude anything else attached to the user
 			// like access tokens etc
-
 			email: locals.user?.email
 		}
 	};

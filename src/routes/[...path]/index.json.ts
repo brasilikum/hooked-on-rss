@@ -74,8 +74,8 @@ const render = (items) => `<rss version="2.0" xmlns:atom="http://www.w3.org/2005
 			<link>https://crinkle.dev/writing/${item.slug}</link>
 			<description>${item.description}</description>
 			<pubDate>${new Date(item.date).toUTCString()}</pubDate>
-		    <guid>asdf</guid>
-        </item>
+			<guid>asdf</guid>
+		</item>
 	`
 		)
 		.join('\n')}

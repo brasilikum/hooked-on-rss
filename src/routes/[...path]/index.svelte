@@ -28,7 +28,7 @@
 	import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-	import NewMsgBubble from '$lib/newMsgBubble.svelte';
+	import NewMsgBubble from '$lib/components/NewMsgBubble.svelte';
 
 	export let msgs = [];
 	let new_msgs = msgs;

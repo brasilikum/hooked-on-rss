@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
-	import Login from '$lib/Login.svelte';
-	import Register from '$lib/Register.svelte';
+	import Login from '$lib/components/Login.svelte';
+	import Register from '$lib/components/Register.svelte';
 
 	function redirectToHome() {
 		goto('/abc');
