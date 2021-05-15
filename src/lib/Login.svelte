@@ -9,7 +9,7 @@
 	async function login() {
 		const res = await fetch('/auth/login', {
 			method: 'POST',
-			body: JSON.stringify(email, password),
+			body: JSON.stringify({ email, password }),
 			headers: { 'Content-Type': 'application/json' }
 		});
 		if (res.ok) {
